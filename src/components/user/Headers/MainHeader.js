@@ -39,8 +39,8 @@ export const MainHeader = () => {
           <div className="xl:min-w-[300px]">
             <Link to="/">
               <div className="flex text-2xl text-black font-sans-serif">
-                <span><HiAcademicCap/></span>
-                <span> STEM Coding Lab</span>
+                <span><HiAcademicCap size={32}/></span>
+                <span style={{ paddingLeft: '12px' }}> STEM Coding Lab</span>
               </div>
             </Link>
           </div>
