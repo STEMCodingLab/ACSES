@@ -178,7 +178,7 @@ export const SessionDetail = () => {
 
   return (
   <div className="container mx-auto">
-    <nav aria-label="breadcrumb" className="w-full">
+    <nav aria-label="breadcrumb" className="pt-4">
         <ol className="flex leading-none text-indigo-600">
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={index}>

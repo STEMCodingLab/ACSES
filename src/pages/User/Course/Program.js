@@ -98,7 +98,7 @@ export const Program = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[185px]" >
       {programs.map(program => (
         <Link to={`/programs/${program.id}`} key={program.id}
-              className="flex bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out overflow-hidden" 
+          className="flex bg-white rounded-lg border border-gray-300 hover:border-gray-400 transition-colors duration-300 ease-in-out overflow-hidden" 
               style={{ height: '100px' }}>
           <div className="p-3 flex flex-col justify-between" style={{ width: '66.66%' }}>
             <h2 className="font-medium text-sm">{program.attributes.Title}</h2>

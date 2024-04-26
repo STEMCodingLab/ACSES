@@ -130,7 +130,7 @@ export const ProgramDetail = () => {
 
   return (
   <div className="container mx-auto">
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" className="pt-4">
       <ol className="flex items-center space-x-2">
         {breadcrumbs.map((crumb, index) => (
           <React.Fragment key={index}>
@@ -156,73 +156,81 @@ export const ProgramDetail = () => {
       <div className="bg-[#ffffff] w-2/3" >
         <div className="p-6">
           <div className="flex flex-col items-center w-full">
-            <div className="flex justify-between items-center w-full">
+            <div className="flex items-center w-full">
               <button
                 onClick={toggleOverview}
                 className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
               >
-                {isOverviewExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
-                <span>Overview</span>
+                <div className="flex items-center">
+                  {isOverviewExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
+                  <span>Overview</span>
+                </div>
               </button>
             </div>
             {isOverviewExpanded && (
-              <p className="text-gray-600 text-center text-justify">
+              <p className="text-gray-600 text-left w-full pl-8"> {/* Adjusted padding-left to align with 'Overview' */}
                 {parseOverview(program.attributes.Overview)}
               </p>
             )}
           </div>
-        </div>
+      </div>
 
 
-        <div className="p-6">
-          <div className="flex flex-col items-center w-full">
-            <div className="flex justify-between items-center w-full">
-              <button
-                onClick={toggleWhatIncluded}
-                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
-              >
+      <div className="p-6">
+        <div className="flex flex-col items-center w-full">
+          <div className="flex items-center w-full">
+            <button
+              onClick={toggleWhatIncluded}
+              className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
+            >
+              <div className="flex items-center">
                 {isWhatIncludedExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
                 <span>What's Included</span>
-              </button>
-            </div>
-            {isWhatIncludedExpanded && (
-              <p className="text-gray-600 text-center text-justify">
-                {parseWhatIncluded(program.attributes.WhatIncluded)}
-              </p>
-            )}
+              </div>
+            </button>
           </div>
+          {isWhatIncludedExpanded && (
+            <p className="text-gray-600 text-left w-full pl-8"> {/* Adjusted padding-left to align with 'What's Included' */}
+              {parseWhatIncluded(program.attributes.WhatIncluded)}
+            </p>
+          )}
         </div>
+      </div>
         
 
         
-          <div className="p-6">
-            <div className="flex justify-between items-center">
-              <button
-                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
-                onClick={toggleExpand}
-              >
-                {isExpanded ? <GoChevronDown /> : <GoChevronRight />}
-                <span className="text-xl text-gray-600 block mb-2 leading-loose">Sessions</span> 
-              </button>
+      <div className="p-6">
+        <div className="flex items-center w-full">
+          <button
+            onClick={toggleExpand}
+            className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
+          >
+            <div className="flex items-center">
+              {isExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
+              <span>Sessions</span>
             </div>
+          </button>
+        </div>
 
-              {isExpanded && (
-                <div className="bg-[#ffffff] overflow-hidden sm:rounded-lg">
-                  <ul className="divide-y divide-gray-200">
-                    <li className="px-6 py-4">
-                      <div className="flex justify-between">
-                        <div className="w-1/3 text-sm font-medium text-gray-500 text-left">Title</div>
-                        <div className="w-1/3 text-sm font-medium text-gray-500 text-center">Duration</div>
-                        <div className="w-1/3 text-sm font-medium text-gray-500 text-center">Tag</div>
-                      </div>
-                    </li>
-                    <li>
-                      <Session programId={programId} />
-                    </li>
-                  </ul>
+        {isExpanded && (
+          <div className="bg-[#ffffff] overflow-hidden sm:rounded-lg">
+            <ul className="divide-y divide-gray-200">
+              <li className="px-6 py-4">
+                <div className="flex justify-between">
+                  <div className="w-1/3 text-sm font-medium text-gray-500 text-left">Title</div>
+                  <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Duration</div>
+                  <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Tag</div>
                 </div>
-              )}
+              </li>
+              <li>
+
+                  <Session programId={programId} />
+                  
+              </li>
+            </ul>
           </div>
+        )}
+      </div>
         
       </div>
 
