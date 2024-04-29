@@ -82,17 +82,21 @@ export const Program = () => {
     
     <div className="container mx-auto p-5 ">
              {/* Grade和FocusArea下拉框 */}
-        <div className="mb-4">
-          <select value={selectedGrade} onChange={handleGradeChange} className="p-2 border border-gray-300 rounded mr-2">
+        <div className="mb-4 flex">
+          <div className="border border-gray-300 rounded mr-4">
+          <select value={selectedGrade} onChange={handleGradeChange} className="p-2 mr-2">
             {grades.map(grade => (
               <option key={grade} value={grade}>{grade}</option>
             ))}
           </select>
-          <select value={selectedFocusArea} onChange={handleFocusAreaChange} className="p-2 border border-gray-300 rounded">
+          </div>
+          <div className="border border-gray-300 rounded">
+          <select value={selectedFocusArea} onChange={handleFocusAreaChange} className="p-2 mr-2">
             {focusAreas.map(area => (
               <option key={area} value={area}>{area}</option>
             ))}
           </select>
+          </div>
         </div>
       <h1 className="text-2xl font-semibold mb-6">Resources</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[185px]" >
