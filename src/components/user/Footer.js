@@ -54,30 +54,41 @@ export const Footer = () => {
             <div className="space-y-3 mt-2"> {/* Adjust space-y value for 12px between items */}
               <p className="font-medium text-base mb-4" style={{ color: '#1F1F1F' }}>Customer Services</p> {/* Add mb-4 for 16px margin below title */}
               <div className="flex flex-col space-y-3 font-normal" style={{ color: '#1F1F1F' }}> {/* 添加 space-y-3 类 */}
-  <Link
-    to="/"
-    className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
-  >
-    About Us
-  </Link>
-  <Link
-    to="/"
-    className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
-  >
-    Terms & Conditions
-  </Link>
-  <Link
-    to="/"
-    className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
-  >
-    FAQ
-  </Link>
-  <Link
-    to="/"
-    className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
-  >
-    Privacy Policy
-  </Link>
+              <a
+                href="https://stemcodinglab.org/about-us/"
+                className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                About Us
+              </a>
+
+              <a
+                href="https://stemcodinglab.org/programs/"
+                className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Our Program
+              </a>
+
+              <a
+                href="https://stemcodinglab.org/get-involved/volunteer/"
+                className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Volunteer
+              </a>
+
+              <a
+                href="https://stem-coding-lab.careerplug.com/account"
+                className="hover:text-blue-900 hover:ml-1 duration-100 ease-linear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Career
+              </a>
 </div>
 
             </div>

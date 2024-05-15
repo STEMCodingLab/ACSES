@@ -45,6 +45,7 @@ export const UserLogin = () => {
   
       // 存储 JWT 到 localStorage，用于后续请求的认证
       localStorage.setItem('jwt', response.data.jwt);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
   
       toast.success("Login Successful");
       navigate("/home");

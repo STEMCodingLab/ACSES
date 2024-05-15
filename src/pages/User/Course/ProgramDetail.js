@@ -5,7 +5,7 @@ import { GoChevronRight } from "react-icons/go";
 import { GoChevronDown } from "react-icons/go";
 import { useNavigate, Link } from 'react-router-dom';
 
-
+import Comments from '../../../components/common/Comments/Comments';
 export const ProgramDetail = () => {
   const [program, setProgram] = useState(null);
   const { programId } = useParams();
@@ -13,13 +13,66 @@ export const ProgramDetail = () => {
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(true);
   const [isWhatIncludedExpanded, setIsWhatIncludedExpanded] = useState(true);
   const navigate = useNavigate();
-
+  // 评论数据
+  const [commentData, setCommentsData] = useState([]);
   // 创建一个函数来处理后退操作
   const goBack = () => {
     navigate(-1); // 后退
   };
   
+const  transformData=(data)=> {
+  
+  let transformedData = [];
+  
+  // 构建回复映射表
+  const replyMap = {};
+  if(data.length<=0){
 
+    return transformedData;
+  }
+  for (const comment of data) {
+    const id = comment.id;
+    const rid = comment.attributes.rid || 0;
+      if (!replyMap[rid]) {
+          replyMap[rid] = [];
+      }
+
+      replyMap[rid].push({
+        id: id,
+        uid: comment.attributes.uid,
+        author: comment.attributes.author,
+        content: comment.attributes.content,
+        createdAt: comment.attributes.createdAt,
+        updatedAt: comment.attributes.updatedAt,
+        publishedAt: comment.attributes.publishedAt
+      });
+    }
+  
+  transformedData=[...replyMap[0]]
+  transformedData.forEach(comment => {
+    comment.reply=[]
+      if (replyMap[comment.id]) {
+          comment.reply = replyMap[comment.id];
+      }
+  });
+
+  return Object.values(transformedData);
+}
+// 获取评论数据
+const fetchCommentData= ()=>{
+  const token = localStorage.getItem('jwt');
+  // 获取评论数据
+    fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/comments?populate=*&filters[pid][$eq]=${programId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setCommentsData(transformData(data.data))
+      console.log('Comments data:', transformData(data.data))
+    })
+}
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/programs/${programId}?populate=Cover,sessions`, {
@@ -32,6 +85,9 @@ export const ProgramDetail = () => {
       setProgram(data.data);
     })
     .catch(error => console.error('Error fetching program details:', error));
+    
+    fetchCommentData()
+    
   }, [programId]);
 
   if (!program) {
@@ -230,8 +286,13 @@ export const ProgramDetail = () => {
             </ul>
           </div>
         )}
+
       </div>
-        
+                {/* 在 Sessions 下方添加评论页面 */}
+<div>
+  {/* 在这里添加你的评论组件 */}
+  <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
+</div>
       </div>
 
       <div className="bg-[#F0F3FB] w-1/3"  style={{margin:20,borderRadius:20}}>
