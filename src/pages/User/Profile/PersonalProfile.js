@@ -29,6 +29,7 @@ export const Profile = () => {
     .then(response => response.json())
     .then(data => {
       setProfile(data);
+      console.log(data,8989);
     })
     .catch(error => console.error('Error fetching profile:', error));
 
@@ -173,8 +174,13 @@ export const Profile = () => {
           
         </div>
         {/* 可以添加更多的个人信息展示 */}
-          <button
+          
+      </div>
+
+      <div style={{ backgroundColor: '#fff' }}>
+      <button
           onClick={() => setShowModel(true)}
+          className="mt-8"
           style={{
             padding: '10px 20px',
             fontSize: '16px',
@@ -186,14 +192,14 @@ export const Profile = () => {
             boxShadow: '0 2px 4px rgba(0, 123, 255, 0.2)',
             transition: 'background-color 0.3s ease-in-out',
           }}
-    >
-      add
-    </button>
+      >
+        add
+      </button>
 
-            <div className="mt-8">
-                 <Table data={notesList} handleDelete={handleDelete}></Table>
-            </div>
-          {showModel && (<Modal onSubmit={handleSubmit} onClose={() => setShowModel(false)}> </Modal>)}
+      <div>
+        <Table data={notesList} handleDelete={handleDelete}></Table>
+      </div>
+      {showModel && (<Modal onSubmit={handleSubmit} onClose={() => setShowModel(false)}> </Modal>)}
       </div>
    
     </div>
@@ -253,7 +259,7 @@ const [dateValue, setDateValue] = useState(new Date());
   }
 
   return (
-    <div style={{position:'fixed', top:0, left:0,  width: '100%', height: '100%',backgroundColor:'rgba(0,0,0,0.5)',display:'flex',justifyContent:'center',alignItems:'center' }}>
+    <div style={{position:'fixed', top:0, left:0,  width: '100%', height: '100%',backgroundColor:'rgba(0,0,0,0.5)',display:'flex',justifyContent:'center',alignItems:'center' }}> 
 
     <div style={{ width: '500px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#fff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
       <h2 style={{ fontSize: '20px', marginBottom: '10px' }}>add notes</h2>

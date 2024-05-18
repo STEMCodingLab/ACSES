@@ -44,18 +44,21 @@ const  transformData=(data)=> {
         content: comment.attributes.content,
         createdAt: comment.attributes.createdAt,
         updatedAt: comment.attributes.updatedAt,
-        publishedAt: comment.attributes.publishedAt
+        publishedAt: comment.attributes.publishedAt,
+        img:comment.attributes.img
       });
     }
+  if(replyMap[0]){
+    transformedData=[...replyMap[0]]
+    transformedData.forEach(comment => {
+      comment.reply=[]
+        if (replyMap[comment.id]) {
+            comment.reply = replyMap[comment.id];
+        }
+    });
+  }
   
-  transformedData=[...replyMap[0]]
-  transformedData.forEach(comment => {
-    comment.reply=[]
-      if (replyMap[comment.id]) {
-          comment.reply = replyMap[comment.id];
-      }
-  });
-
+  console.log(transformedData,44);
   return Object.values(transformedData);
 }
 // 获取评论数据
@@ -289,10 +292,10 @@ const fetchCommentData= ()=>{
 
       </div>
                 {/* 在 Sessions 下方添加评论页面 */}
-<div>
-  {/* 在这里添加你的评论组件 */}
-  <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
-</div>
+        <div>
+          {/* 在这里添加你的评论组件 */}
+          <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
+        </div>
       </div>
 
       <div className="bg-[#F0F3FB] w-1/3"  style={{margin:20,borderRadius:20}}>

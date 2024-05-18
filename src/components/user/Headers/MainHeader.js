@@ -23,6 +23,8 @@ export const MainHeader = () => {
     .then(response => response.json())
     .then(data => {
       setProfile(data);
+      console.log(data,64789);
+      localStorage.setItem('Avatar',data.Avatar.url)
     })
     .catch(error => console.error('Error fetching profile:', error));
   }, []);

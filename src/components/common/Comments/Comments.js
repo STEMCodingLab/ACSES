@@ -14,7 +14,9 @@ const Comment = ({ comment, onSetComment,onDeleteComment }) => {
   {/* 一级评论 */}
   <div className="flex items-start justify-between" onClick={() => onSetComment(comment.id,comment.author)}>
     <div className="flex items-center">
-      <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2"></div> {/* 头像 */}
+      <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2">
+        <img src={comment.img}/>
+        </div> {/* 头像 */}
       <div>
         <p className="text-gray-800 font-semibold">{comment.author}</p> {/* 评论者姓名 */}
         <p className="text-gray-500 ml-2">{comment.content}</p> {/* 评论内容 */}
@@ -26,10 +28,10 @@ const Comment = ({ comment, onSetComment,onDeleteComment }) => {
   </div>
   {/* 二级评论列表 */}
   <div className="ml-8 mt-2">
-    {comment.reply.map((reply) => (
+    {comment.reply.length>0&&comment.reply.map((reply) => (
       <div key={reply.id} className="flex items-start justify-between border-l-2 pl-2">
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2"></div> {/* 头像 */}
+          <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2"> <img src={reply.img}/></div> {/* 头像 */}
           <div>
             <p className="text-gray-600 font-semibold">{reply.author}</p> {/* 评论者姓名 */}
             <p className="text-gray-500 ml-2">{reply.content}</p> {/* 评论内容 */}
@@ -67,6 +69,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
           rid: 0,
           uid: user.id,
           pid: parseInt(programId),
+          img:localStorage.getItem('Avatar')
         }
         console.log(newCommentObject, "回复题主");
       } else {
@@ -78,6 +81,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
           rid: commentID,
           uid: user.id,
           pid: parseInt(programId),
+          img:localStorage.getItem('Avatar')
         };
         console.log("回复评论数据", newCommentObject);
 
@@ -115,6 +119,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
         },
       });
       console.log('Comment deleted successfully');
+      setNewComment('')
       fetchCommentData()
     } catch (error) {
       console.error('Error:', error);
@@ -124,7 +129,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
     <div className="flex flex-col w-full p-6">
       <h2 className="text-xl font-bold mb-4 text-gray-600">Comments</h2>
       {/* 渲染一级评论 */}
-      {commentData.map((comment) => (
+       {commentData.length>0&&commentData.map((comment) => (
         <Comment key={comment.id} comment={comment} onSetComment={setComment} onDeleteComment={onDeleteComment} />
       ))}
       {/* 输入框 */}
