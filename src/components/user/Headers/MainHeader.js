@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { HiAcademicCap } from "react-icons/hi2";
+// import { HiAcademicCap } from "react-icons/hi2";
 import { userLoggedOut } from "../../../features/auth/userAuthSlice";
 import { toast } from "react-hot-toast";
 export const MainHeader = () => {
@@ -11,8 +11,6 @@ export const MainHeader = () => {
   const [mobileSerach, setMobileSearch] = useState(false);
   const [profile, setProfile] = useState();
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     
     fetch('https://vivid-bloom-0edc0dd8df.strapiapp.com/api/users/me?populate=Avatar&populate=Background', { // 修改这个URL为你的API地址
@@ -41,8 +39,14 @@ export const MainHeader = () => {
           <div className="xl:min-w-[300px]">
             <Link to="/">
               <div className="flex text-2xl text-black font-sans-serif">
-                <span><HiAcademicCap size={32}/></span>
-                <span style={{ paddingLeft: '12px' }}> STEM Coding Lab</span>
+              <span style={{ marginTop: '25px' }}>
+                <img 
+                  src="https://vivid-bloom-0edc0dd8df.media.strapiapp.com/SCL_High_Res_Logo_ca96671fc0.png" 
+                  alt="Customer Logo" 
+                  style={{ width: '150px', height: 'auto' }} 
+                />
+              </span>
+                {/* <span style={{ paddingLeft: '12px' }}> STEM Coding Lab</span> */}
               </div>
             </Link>
           </div>
