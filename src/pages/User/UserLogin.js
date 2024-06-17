@@ -37,20 +37,20 @@ export const UserLogin = () => {
     setError("");
   
     try {
-      // 发送 POST 请求到 Strapi 登录接口
+      // Send a POST request to the Strapi login interface
       const response = await axios.post('https://vivid-bloom-0edc0dd8df.strapiapp.com/api/auth/local', {
-        identifier: email, // Strapi 需要 'identifier' 字段，可以是用户名或邮箱
+        identifier: email, // Strapi requires the 'identifier' field, which can be a username or email address
         password: password,
       });
   
-      // 存储 JWT 到 localStorage，用于后续请求的认证
+      // Store JWT to localStorage for subsequent request authentication
       localStorage.setItem('jwt', response.data.jwt);
       localStorage.setItem('user', JSON.stringify(response.data.user));
   
       toast.success("Login Successful");
       navigate("/home");
     } catch (error) {
-      // 处理错误
+      // deal with error
       setError("Login Failed");
       console.log(error);
     }
@@ -90,14 +90,6 @@ export const UserLogin = () => {
           <Button name="Login" className="w-full" />
               </Form>
               {error !== "" && <Error error={error} />}
-        {/* <div className="mt-4 mb-3 text-center">
-          <span>
-            you don't have an account? please{" "}
-            <Link to="/register" className="text-[#28a745] font-normal">
-              Register here.
-            </Link>
-          </span>
-        </div> */}
       </div>
     </div>
   );

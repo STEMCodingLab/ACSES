@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-// 评论组件
+// comment components
 const Comment = ({ comment, onSetComment,onDeleteComment }) => {
   const user=JSON.parse(localStorage.getItem('user'));
   console.log(comment);
@@ -11,30 +11,30 @@ const Comment = ({ comment, onSetComment,onDeleteComment }) => {
   }
   return (
     <div className="py-2 border-b border-gray-300">
-  {/* 一级评论 */}
+  {/* first level comment */}
   <div className="flex items-start justify-between" onClick={() => onSetComment(comment.id,comment.author)}>
     <div className="flex items-center">
       <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2">
         <img src={comment.img}/>
-        </div> {/* 头像 */}
+        </div> {/* avatar */}
       <div>
-        <p className="text-gray-800 font-semibold">{comment.author}</p> {/* 评论者姓名 */}
-        <p className="text-gray-500 ml-2">{comment.content}</p> {/* 评论内容 */}
+        <p className="text-gray-800 font-semibold">{comment.author}</p> {/* comment author */}
+        <p className="text-gray-500 ml-2">{comment.content}</p> {/* comment content*/}
       </div>
     </div>
     {isCurrentUser(comment.uid) && (
       <button onClick={() => onDeleteComment(comment.id)} className="text-red-500">Delete</button>
     )}
   </div>
-  {/* 二级评论列表 */}
+  {/* second level comment list */}
   <div className="ml-8 mt-2">
     {comment.reply.length>0&&comment.reply.map((reply) => (
       <div key={reply.id} className="flex items-start justify-between border-l-2 pl-2">
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2"> <img src={reply.img}/></div> {/* 头像 */}
+          <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2"> <img src={reply.img}/></div> {/* avatar */}
           <div>
-            <p className="text-gray-600 font-semibold">{reply.author}</p> {/* 评论者姓名 */}
-            <p className="text-gray-500 ml-2">{reply.content}</p> {/* 评论内容 */}
+            <p className="text-gray-600 font-semibold">{reply.author}</p> {/* comment author */}
+            <p className="text-gray-500 ml-2">{reply.content}</p> {/* comment content */}
           </div>
         </div>
         {isCurrentUser(reply.uid) && (
@@ -46,34 +46,34 @@ const Comment = ({ comment, onSetComment,onDeleteComment }) => {
 </div>)
 };
 
-// 评论组件
+// comment component
 const Comments = ({ commentData, fetchCommentData }) => {
   const { programId } = useParams();
   const userName = JSON.parse(localStorage.getItem('user'))['username']
   const [commentID, setCommentID] = useState(0)
   const [newComment, setNewComment] = useState('');
-  //   提交评论
+  //   submit comment
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newCommentObject
-    // 写一个正则匹配是否包含@以及:'@'+author+': '
+    // regexp:'@'+author+': '
     const regex = /@(.*?):\s/;
     if (newComment.trim() !== '') {
       const token = localStorage.getItem('jwt');
       const user = JSON.parse(localStorage.getItem('user'))
       if (commentID === 0 || !regex.test(newComment)) {
-        // 回复题主
+        // reply first level comment
         newCommentObject = {
-          author: userName, // 替换成当前用户的信息
+          author: userName, // replce to recent user info
           content: newComment,
           rid: 0,
           uid: user.id,
           pid: parseInt(programId),
           img:localStorage.getItem('Avatar')
         }
-        console.log(newCommentObject, "回复题主");
+        console.log(newCommentObject, "reply");
       } else {
-        // 剔除匹配的内容
+        // Eliminate matches
         const content = newComment.replace(regex, '');
         newCommentObject = {
           author: userName,
@@ -83,7 +83,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
           pid: parseInt(programId),
           img:localStorage.getItem('Avatar')
         };
-        console.log("回复评论数据", newCommentObject);
+        console.log("reply to comment data", newCommentObject);
 
 
       }
@@ -105,11 +105,11 @@ const Comments = ({ commentData, fetchCommentData }) => {
     }
   };
   const setComment = (commentID, author) => {
-    console.log(commentID, author, "评论ID");
+    console.log(commentID, author, "commentID");
     setCommentID(commentID)
     setNewComment('@' + author + ': ')
   }
-  // 删除评论
+  // delete comment
   const onDeleteComment = async (commentId) => {
     const token = localStorage.getItem('jwt');
     try {
@@ -128,11 +128,11 @@ const Comments = ({ commentData, fetchCommentData }) => {
   return (
     <div className="flex flex-col w-full p-6">
       <h2 className="text-xl font-bold mb-4 text-gray-600">Comments</h2>
-      {/* 渲染一级评论 */}
+      {/* render first level comment */}
        {commentData.length>0&&commentData.map((comment) => (
         <Comment key={comment.id} comment={comment} onSetComment={setComment} onDeleteComment={onDeleteComment} />
       ))}
-      {/* 输入框 */}
+      {/* input form */}
       <form onSubmit={handleSubmit} className="mt-4">
         <textarea
           value={newComment}

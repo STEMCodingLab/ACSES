@@ -31,11 +31,11 @@ export const SessionDetail = () => {
 
   const breadcrumbs = [
     { name: 'All Programs', link: '/' },
-    { name: programTitle, link: `/programs/${programId}` }, // Program Title 应替换为实际程序标题
-    { name: sessionTitle, link: `/programs/${programId}/sessions/${sessionId}` }, // Session Title 应替换为实际会话标题
+    { name: programTitle, link: `/programs/${programId}` }, // Program Title 
+    { name: sessionTitle, link: `/programs/${programId}/sessions/${sessionId}` }, // Session Title 
   ];
  
-  // 递归地渲染列表项
+  // Rendering list items recursively
   const renderListItems = (items) => {
     if(!items) return null;
     return items.map((item, index) => {
@@ -46,7 +46,7 @@ export const SessionDetail = () => {
     });
   };
 
-  // 渲染 objectives 中的每一项（可能是列表或段落）
+  // Render each item in the objectives (which may be a list or a paragraph)
   const renderObjectivesItem = (item) => {
     if (!item) return null;
     if (item.type === 'list') {
@@ -57,7 +57,7 @@ export const SessionDetail = () => {
     }
   };
 
-  // 渲染 objectives
+  // render objectives
   const renderObjectives = (objectives) => {
     if (!objectives) return <p>No objectives available.</p>;
     if (!objectives) return <p>No objectives available.</p>; 
@@ -65,7 +65,7 @@ export const SessionDetail = () => {
   };
 
 
-  // 解析并渲染 overview
+  // parse and render overview
   const renderOverview = (overview) => {
     if (!overview) return <p>No overview available.</p>; 
     return overview.map((paragraph, index) => {
@@ -77,18 +77,18 @@ export const SessionDetail = () => {
   const renderDiscussionTopics = (discussionTopics) => {
     if (!discussionTopics) return <p>No discussion topics available.</p>;
     return discussionTopics.map((topic, index) => {
-      // 对于标题类型
+      // topic type
       if (topic.type === 'heading') {
-        const HeadingTag = `h${topic.level}`; // 根据 level 创建对应的标题标签
+        const HeadingTag = `h${topic.level}`; // Creates title tags based on level
         return <HeadingTag key={index}>{topic.children.map(child => child.text).join('')}</HeadingTag>;
       }
   
-      // 对于段落类型
+      // topic.type === 'paragraph'
       if (topic.type === 'paragraph') {
         return <p key={index}>{topic.children.map(child => child.text).join('')}</p>;
       }
   
-      // 对于无序列表类型
+      // topic.type === 'list' && topic.format === 'unordered'
       if (topic.type === 'list' && topic.format === 'unordered') {
         return (
           <ul key={index} style={{ listStyleType: 'disc', paddingLeft: '1em' }}>
@@ -101,7 +101,7 @@ export const SessionDetail = () => {
         );
       }
   
-      // 可以添加其他类型的处理方式
+      // otehr types of data
       return null;
     });
   };
@@ -111,18 +111,18 @@ export const SessionDetail = () => {
   const renderActivities = (activities) => {
     if (!activities) return <p>No activities available.</p>;
     return activities.map((activity, index) => {
-      // 对于段落类型
+      // activity.type === 'paragraph'
       if (activity.type === 'paragraph') {
         return <p key={index}>{activity.children.map(child => child.text).join('')}</p>;
       }
   
-      // 对于标题类型
+      // activity.type === 'heading'
       if (activity.type === 'heading') {
         const HeadingTag = `h${activity.level}`; // 根据 level 创建对应的标题标签
         return <HeadingTag key={index}>{activity.children.map(child => child.text).join('')}</HeadingTag>;
       }
   
-      // 可以添加其他类型的处理方式
+      // other types of data if needed
       return null;
     });
   };
@@ -131,19 +131,19 @@ export const SessionDetail = () => {
   const renderAlignment = (alignment) => {
     if (!alignment) return <p>No alignment available.</p>;
     return alignment.map((item, index) => {
-      // 对于段落类型
+      // item.type === 'paragraph'
       if (item.type === 'paragraph') {
         return (
           <p key={index}>
             {item.children.map((child, childIndex) => {
-              // 检查文本是否需要加粗
+              // Check if text needs to be bolded
               return child.bold ? <strong key={childIndex}>{child.text}</strong> : <span key={childIndex}>{child.text}</span>;
             })}
           </p>
         );
       }
   
-      // 可以添加其他类型的处理方式
+      // otehr types of data if needed
       return null;
     });
   };
@@ -168,7 +168,7 @@ export const SessionDetail = () => {
   };
 
   const toggleAlignment = () => {
-    setIsAlignmentExpanded(!isAlignmentExpanded); // 切换状态
+    setIsAlignmentExpanded(!isAlignmentExpanded); // switch status
   };
   
 
@@ -198,7 +198,7 @@ export const SessionDetail = () => {
  
     <div className="w-full bg-[#ffffff] flex container" style={{margin:"auto",borderRadius:20,overflow:"hidden",marginTop:20,marginBottom:20}}>
       
-      {/* 这里可以展示更多的content详情 */}
+      {/* Here you can show more details of the content */}
       <div className="bg-[#ffffff] w-2/3" >
         <div style={{ borderRadius:10,padding:20,marginBottom:20 }}>
           
@@ -208,10 +208,10 @@ export const SessionDetail = () => {
                 onClick={toggleOverview}
                 className="text-lg  flex items-center justify-start w-full"
               >
-                {isOverviewExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* 添加一个展开/折叠的指示器 */}
+                {isOverviewExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
                 <span>Overview</span>
               </button>
-              {isOverviewExpanded && ( // 根据 isOverviewExpanded 状态条件渲染内容
+              {isOverviewExpanded && ( // Renders content based on the isOverviewExpanded status condition.
                 <div className="mt-2 ml-4 text-gray-700">
                   {renderOverview(session.attributes.Overview)}
                 </div>
@@ -227,7 +227,7 @@ export const SessionDetail = () => {
                 onClick={toggleDiscussionTopics}
                 className=" text-lg flex items-center justify-start w-full"
               >
-                {isDiscussionTopicsExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* 添加一个展开/折叠的指示器 */}
+                {isDiscussionTopicsExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
                 <span>Discussion Topics</span>
               </button>
               {isDiscussionTopicsExpanded && ( 
@@ -245,7 +245,7 @@ export const SessionDetail = () => {
                 onClick={toggleActivitiesTopics}
                 className="text-lg flex items-center justify-start w-full"
               >
-                {isActivitiesExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* 添加一个展开/折叠的指示器 */}
+                {isActivitiesExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
                 <span>Activities</span>
               </button>
               {isActivitiesExpanded && ( 
@@ -269,13 +269,13 @@ export const SessionDetail = () => {
             <button
               onClick={toggleObjective}
               className=" text-md  flex items-center justify-start w-full"
-              style={{ fontSize: '14px' }} // 修改字体大小
+              style={{ fontSize: '14px' }} // fontsize
             >
               {isObjecitveExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
               <span>Objective</span>
             </button>
             {isObjecitveExpanded && (
-              <ul className="list-disc mt-2 ml-8 text-gray-700" style={{ fontSize: '14px' }}> {/* 修改字体大小 */}
+              <ul className="list-disc mt-2 ml-8 text-gray-700" style={{ fontSize: '14px' }}> {/* font size */}
                 {renderObjectives(session.attributes.Objectives)}
               </ul>
             )}
@@ -289,9 +289,9 @@ export const SessionDetail = () => {
             <button 
               onClick={toggleAlignment}
               className=" text-lg  flex items-center justify-start w-full"
-              style={{ fontSize: '14px' }} // 修改字体大小
+              style={{ fontSize: '14px' }} 
             >
-              {isAlignmentExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />} {/* 展开/折叠指示 */}
+              {isAlignmentExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />} {/* an expand/collapse indicator */}
               <span>Alignment</span>
             </button>
             {isAlignmentExpanded && (

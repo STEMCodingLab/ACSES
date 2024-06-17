@@ -3,7 +3,6 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { HiAcademicCap } from "react-icons/hi2";
 import { userLoggedOut } from "../../../features/auth/userAuthSlice";
 import { toast } from "react-hot-toast";
 export const MainHeader = () => {
@@ -13,7 +12,7 @@ export const MainHeader = () => {
 
   useEffect(() => {
     
-    fetch('https://vivid-bloom-0edc0dd8df.strapiapp.com/api/users/me?populate=Avatar&populate=Background', { // 修改这个URL为你的API地址
+    fetch('https://vivid-bloom-0edc0dd8df.strapiapp.com/api/users/me?populate=Avatar&populate=Background', { // fetch API
       headers: {
         'Authorization': `Bearer ${userAccessToken}`
       }
@@ -27,7 +26,7 @@ export const MainHeader = () => {
     .catch(error => console.error('Error fetching profile:', error));
   }, []);
 
-  const avatarUrl = profile && profile.Avatar ? `${profile.Avatar.url}` : '默认头像地址';
+  const avatarUrl = profile && profile.Avatar ? `${profile.Avatar.url}` : 'Default avatar address';
 
 
   return (
@@ -109,19 +108,19 @@ export const MainHeader = () => {
 };
 
 const LogoutButton = () => {
-  const dispatch = useDispatch(); // 如果使用Redux
+  const dispatch = useDispatch(); // use Redux
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 清除用户状态
-    dispatch({ type: 'LOGOUT' }); // 例如，使用Redux dispatch来清除用户状态
+    // clear user data
+    dispatch({ type: 'LOGOUT' }); // use Redux dispatch
 
-    // 清除认证信息，如JWT或cookies
-    localStorage.removeItem('jwt'); // 假设JWT存储在localStorage中
-    // 或者：cookies.remove('jwt'); // 如果使用cookies
+    // remove jwt
+    localStorage.removeItem('jwt'); // if use jwt
+    // or：cookies.remove('jwt'); // if use cookie
     dispatch(userLoggedOut());
     toast.success("Logout SuccessFull");
-    // 重定向到登录页面或其他页面
+    // redirect to login page
     navigate('/login');
   };
 

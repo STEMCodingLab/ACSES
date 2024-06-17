@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Page, Document } from '@react-pdf/renderer';
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 function getWordViewerUrl(wordUrl) {
@@ -20,7 +19,7 @@ export const ContentDetail = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data); // 打印数据看看是否正确返回
+      console.log(data); // print data to check if correct
       setDetail(data.data);
     })
     .catch(error => console.error('Error fetching content detail:', error));

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export const Session = ({ programId }) => {
   const [sessions, setSessions] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -20,17 +18,6 @@ export const Session = ({ programId }) => {
     })
     .catch(error => console.error('Error fetching sessions:', error));
   }, [programId]);
-
-  // 这里可以添加更多的解析函数，例如解析objectives等
-  const handleSessionClick = (sessionId, programTitle, sessionTitle) => {
-    navigate(`/programs/${programId}/sessions/${sessionId}`,{ 
-      state: { 
-        programId: programId, 
-        programTitle: programTitle,
-        sessionTitle: sessionTitle,
-        }
-      });
-    };
 
     return (
       <div>

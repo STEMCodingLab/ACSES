@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Session } from './Session';
 import { GoChevronRight } from "react-icons/go";
 import { GoChevronDown } from "react-icons/go";
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Comments from '../../../components/common/Comments/Comments';
 export const ProgramDetail = () => {
@@ -12,19 +12,14 @@ export const ProgramDetail = () => {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(true);
   const [isWhatIncludedExpanded, setIsWhatIncludedExpanded] = useState(true);
-  const navigate = useNavigate();
-  // 评论数据
+  // comment data
   const [commentData, setCommentsData] = useState([]);
-  // 创建一个函数来处理后退操作
-  const goBack = () => {
-    navigate(-1); // 后退
-  };
   
 const  transformData=(data)=> {
   
   let transformedData = [];
   
-  // 构建回复映射表
+  // Constructing a Response Mapping Table
   const replyMap = {};
   if(data.length<=0){
 
@@ -61,10 +56,9 @@ const  transformData=(data)=> {
   console.log(transformedData,44);
   return Object.values(transformedData);
 }
-// 获取评论数据
+// fetch comment data
 const fetchCommentData= ()=>{
   const token = localStorage.getItem('jwt');
-  // 获取评论数据
     fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/comments?populate=*&filters[pid][$eq]=${programId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -97,11 +91,11 @@ const fetchCommentData= ()=>{
     return <div>Loading...</div>;
   }
 
-  // 简化的面包屑数组，您可以根据实际的路由结构进行调整
+  // simplify breadcrums array
   const breadcrumbs = [
     { name: 'Programs', link: '/' },
     { name: program.attributes.Title, link: `/programs/${programId}` },
-    // 假设您有更多的层级，可以继续添加
+    // if have more layers, add here
   ];
   
   const parseOverview = (overview) => {
@@ -117,12 +111,12 @@ const fetchCommentData= ()=>{
   const parseWhatIncluded = (whatIncluded) => {
     if (!whatIncluded) return <p>No What's Included available.</p>;
     return whatIncluded.map(block => {
-      // 对于段落类型
+      // block type == "paragraph"
       if (block.type === 'paragraph') {
         return <p>{block.children.map(child => child.text).join('')}</p>;
       }
   
-      // 对于无序列表类型
+      // block.type === 'list' && block.format === 'unordered'
       if (block.type === 'list' && block.format === 'unordered') {
         return (
           <ul style={{ listStyleType: 'disc', paddingLeft: '1em' }}>
@@ -135,7 +129,7 @@ const fetchCommentData= ()=>{
         );
       }
   
-      // 其他类型可以根据需要添加
+      // other type of data
     });
   };
   
@@ -143,18 +137,18 @@ const fetchCommentData= ()=>{
   const parseSkill = (skill) => {
     if (!skill) return <p>No skill available.</p>;
     return skill.map((skill, index) => {
-      // 对于标题类型
+      // skill type = heading
       if (skill.type === 'heading') {
-        const Tag = `h${skill.level}`; // 根据 level 创建对应级别的标题标签
+        const Tag = `h${skill.level}`; // Creates title tags based on level
         return <Tag key={index} style={{fontSize:15,fontWeight:"bold",marginBottom:20,marginTop:20}}>{skill.children.map(child => child.text).join('')}</Tag>;
       }
   
-      // 对于段落类型
+      // skill.type === 'paragraph'
       if (skill.type === 'paragraph') {
         return <p key={index}>{skill.children.map(child => child.text).join('')}</p>;
       }
   
-      // 对于无序列表类型
+      // skill.type === 'list' && skill.format === 'unordered'
       if (skill.type === 'list' && skill.format === 'unordered') {
         return (
           <ul key={index} style={{ listStyleType: 'disc', paddingLeft: '1em' }}>
@@ -167,7 +161,7 @@ const fetchCommentData= ()=>{
         );
       }
   
-      // 其他类型可以根据需要添加
+      // other types of data
       return null;
     });
   };
@@ -193,7 +187,7 @@ const fetchCommentData= ()=>{
       <ol className="flex items-center space-x-2">
         {breadcrumbs.map((crumb, index) => (
           <React.Fragment key={index}>
-            {index !== 0 && <GoChevronRight />} {/* 在列表项前添加箭头 */}
+            {index !== 0 && <GoChevronRight />} {/* add arrow */}
             <li className={`flex items-center ${index === 0 ? 'text-indigo-600 hover:text-indigo-700 hover:underline': 'font-medium' }`}>
               {index === breadcrumbs.length - 1 ? (
                 <span className="text-gray-500">{crumb.name}</span>
@@ -291,9 +285,9 @@ const fetchCommentData= ()=>{
         )}
 
       </div>
-                {/* 在 Sessions 下方添加评论页面 */}
+                {/* add comment area under Sessions  */}
         <div>
-          {/* 在这里添加你的评论组件 */}
+          {/* add comments components */}
           <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
         </div>
       </div>

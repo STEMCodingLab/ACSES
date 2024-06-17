@@ -6,7 +6,7 @@ export const Program = () => {
   const [programs, setPrograms] = useState([]);
   const [grades, setGrades] = useState([]);
   const [focusAreas, setFocusAreas] = useState([]);
-  const [selectedGrade, setSelectedGrade] = useState('Audience'); // 默认选中'All'
+  const [selectedGrade, setSelectedGrade] = useState('Audience'); // default 'All'
   const [selectedFocusArea, setSelectedFocusArea] = useState('Focus Area');
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const Program = () => {
     })
     .then(response => {
       if(response.status === 401) {
-        localStorage.removeItem('jwt'); // 清除 JWT
-        navigate('/login'); // 重定向到登录页面
+        localStorage.removeItem('jwt'); // remove JWT
+        navigate('/login'); // redirect to login page
         return;
       }
       return response.json();
@@ -57,15 +57,15 @@ export const Program = () => {
     .catch(error => console.error('Error fetching programs:', error));
   }, [selectedGrade, selectedFocusArea]);
   
-  // 解析Overview中的内容
-  const parseOverview = (overview) => {
-    return overview.map((block) => {
-      if (block.type === 'paragraph') {
-        return block.children.map((child) => child.text).join('');
-      }
-      return '';
-    }).join('\n');
-  };
+  // parse Overview
+  // const parseOverview = (overview) => {
+  //   return overview.map((block) => {
+  //     if (block.type === 'paragraph') {
+  //       return block.children.map((child) => child.text).join('');
+  //     }
+  //     return '';
+  //   }).join('\n');
+  // };
 
   const navigate = useNavigate();
 
@@ -81,7 +81,7 @@ export const Program = () => {
   return (
     
     <div className="container mx-auto p-5 ">
-             {/* Grade和FocusArea下拉框 */}
+             {/* Grade and FocusArea drop down*/}
         <div className="mb-4 flex">
           <div className="border border-gray-300 rounded mr-4">
           <select value={selectedGrade} onChange={handleGradeChange} className="p-2 mr-2">

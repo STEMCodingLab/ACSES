@@ -7,16 +7,16 @@ export const useUserAuthChecked = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt"); // 从 localStorage 中获取 JWT
+    const jwt = localStorage.getItem("jwt"); // from localStorage to get JWT
 
     if (jwt) {
-      // 如果 JWT 存在，认为用户已经登录
+      // if JWT exist, then user logged in
       setUserAuth(true);
 
-      // 更新 Redux Store，你可以在这里传递必要的用户信息
+      // renew Redux Store
       dispatch(userLoggedIn({ jwt }));
     } else {
-      // 如果没有 JWT，设置认证状态为 false
+      // if no JWT，status false
       setUserAuth(false);;
     }
   }, [dispatch]);
