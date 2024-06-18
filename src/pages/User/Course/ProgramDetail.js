@@ -12,6 +12,8 @@ export const ProgramDetail = () => {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(true);
   const [isWhatIncludedExpanded, setIsWhatIncludedExpanded] = useState(true);
+  const [isSkillExpanded, setIsSkillExpanded] = useState(true)
+  const [isCommentExpanded, setIsCommentExpanded] = useState(true)
   // comment data
   const [commentData, setCommentsData] = useState([]);
   
@@ -143,9 +145,21 @@ const fetchCommentData= ()=>{
         return <Tag key={index} style={{fontSize:15,fontWeight:"bold",marginBottom:20,marginTop:20}}>{skill.children.map(child => child.text).join('')}</Tag>;
       }
   
-      // skill.type === 'paragraph'
+      // // skill.type === 'paragraph'
+      // if (skill.type === 'paragraph') {
+      //   return <p key={index}>{skill.children.map(child => child.text).join('')}</p>;
+      // }
+
+      // item.type === 'paragraph'
       if (skill.type === 'paragraph') {
-        return <p key={index}>{skill.children.map(child => child.text).join('')}</p>;
+        return (
+          <p key={index}>
+            {skill.children.map((child, childIndex) => {
+              // Check if text needs to be bolded
+              return child.bold ? <strong key={childIndex}>{child.text}</strong> : <span key={childIndex}>{child.text}</span>;
+            })}
+          </p>
+        );
       }
   
       // skill.type === 'list' && skill.format === 'unordered'
@@ -153,7 +167,7 @@ const fetchCommentData= ()=>{
         return (
           <ul key={index} style={{ listStyleType: 'disc', paddingLeft: '1em' }}>
             {skill.children.map((listItem, listItemIndex) => (
-              <li key={listItemIndex} style={{marginTop:10}}>
+              <li key={listItemIndex}>
                 {listItem.children.map(child => child.text)}
               </li>
             ))}
@@ -181,6 +195,14 @@ const fetchCommentData= ()=>{
     setIsWhatIncludedExpanded(!isWhatIncludedExpanded);
   };
 
+  const toggleSkills = () => {
+    setIsSkillExpanded(!isSkillExpanded)
+  }
+
+  const toggleComments = () => {
+    setIsCommentExpanded(!isCommentExpanded)
+  }
+
   return (
   <div className="container mx-auto">
     <nav aria-label="breadcrumb" className="pt-4">
@@ -199,15 +221,11 @@ const fetchCommentData= ()=>{
         ))}
       </ol>
     </nav>
-    {/* <div className="p-6">
-      <button onClick={goBack} className="go-back-button">
-        Go Back
-      </button>
-    </div> */}
     <div className="w-full bg-[#ffffff] flex container" style={{margin:"auto",borderRadius:20,overflow:"hidden",marginTop:20,marginBottom:20}}>
        
       <div className="bg-[#ffffff] w-2/3" >
-        <div className="p-6">
+      <div style={{ borderRadius:10,padding:20,marginBottom:20 }}>
+        <div className="mb-5">
           <div className="flex flex-col items-center w-full">
             <div className="flex items-center w-full">
               <button
@@ -229,7 +247,7 @@ const fetchCommentData= ()=>{
       </div>
 
 
-      <div className="p-6">
+      <div className="mb-5">
         <div className="flex flex-col items-center w-full">
           <div className="flex items-center w-full">
             <button
@@ -252,7 +270,7 @@ const fetchCommentData= ()=>{
         
 
         
-      <div className="p-6">
+      <div className="mb-5">
         <div className="flex items-center w-full">
           <button
             onClick={toggleExpand}
@@ -283,19 +301,50 @@ const fetchCommentData= ()=>{
             </ul>
           </div>
         )}
-
       </div>
+      
                 {/* add comment area under Sessions  */}
-        <div>
-          {/* add comments components */}
+        {/* <div>
+          
           <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
-        </div>
+        </div> */}
+
+        <div className="mb-5">
+              <button 
+                onClick={toggleComments}
+                className=" w-full flex items-center justify-start text-xl text-gray-600 mb-4"
+              >
+                {isCommentExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />} {/* an expand/collapse indicator */}
+                <span>Comments</span>
+              </button>
+              {isCommentExpanded && (
+                <ul className="list-disc mt-2 ml-8 text-gray-700" style={{ fontSize: '14px' }}>
+                  <Comments  commentData={commentData} fetchCommentData={fetchCommentData}/>
+                </ul>
+              )}
+            </div>
+
+      </div>
       </div>
 
-      <div className="bg-[#F0F3FB] w-1/3"  style={{margin:20,borderRadius:20}}>
-          <div className="p-6">
-          <p style={{fontWeight:"bold",fontSize:20,marginBottom:20}}>Skills</p>
-          {parseSkill(program.attributes.Skill)}
+      <div className="bg-[#ffffff] w-1/3 mr-20 ml-30">
+          <div className="p-4 my-4 rounded-lg shadow bg-[#f6f6f6] ml-30" style={{ padding: '10px', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+            <div className="mb-2">
+              <button 
+                onClick={toggleSkills}
+                className=" text-lg  flex items-center justify-start w-full"
+                style={{ fontSize: '14px' }} 
+              >
+                {isSkillExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />} {/* an expand/collapse indicator */}
+                <span>Skills</span>
+              </button>
+              {isSkillExpanded && (
+                <ul className="list-disc mt-2 ml-8 text-gray-700" style={{ fontSize: '14px' }}>
+                  {parseSkill(program.attributes.Skill)}
+                </ul>
+              )}
+            </div>
+
         </div>
       </div>
     </div>

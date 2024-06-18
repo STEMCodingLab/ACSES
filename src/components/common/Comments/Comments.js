@@ -126,8 +126,7 @@ const Comments = ({ commentData, fetchCommentData }) => {
     }
   };
   return (
-    <div className="flex flex-col w-full p-6">
-      <h2 className="text-xl font-bold mb-4 text-gray-600">Comments</h2>
+    <div className="flex flex-col w-full">
       {/* render first level comment */}
        {commentData.length>0&&commentData.map((comment) => (
         <Comment key={comment.id} comment={comment} onSetComment={setComment} onDeleteComment={onDeleteComment} />

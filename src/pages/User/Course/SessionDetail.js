@@ -118,7 +118,7 @@ export const SessionDetail = () => {
   
       // activity.type === 'heading'
       if (activity.type === 'heading') {
-        const HeadingTag = `h${activity.level}`; // 根据 level 创建对应的标题标签
+        const HeadingTag = `h${activity.level}`; 
         return <HeadingTag key={index}>{activity.children.map(child => child.text).join('')}</HeadingTag>;
       }
   
@@ -203,16 +203,18 @@ export const SessionDetail = () => {
         <div style={{ borderRadius:10,padding:20,marginBottom:20 }}>
           
           <div>
-            <div className="mb-2">
+            <div className="mb-5">
               <button 
                 onClick={toggleOverview}
-                className="text-lg  flex items-center justify-start w-full"
+                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
               >
-                {isOverviewExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
-                <span>Overview</span>
+                <div className="flex items-center">
+                  {isOverviewExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
+                  <span>Overview</span>
+                </div>
               </button>
               {isOverviewExpanded && ( // Renders content based on the isOverviewExpanded status condition.
-                <div className="mt-2 ml-4 text-gray-700">
+                <div className="text-gray-600 text-left w-full pl-8">
                   {renderOverview(session.attributes.Overview)}
                 </div>
               )}
@@ -222,16 +224,18 @@ export const SessionDetail = () => {
 
 
           <div>
-            <div className="mb-2">
+            <div className="mb-5">
               <button 
                 onClick={toggleDiscussionTopics}
-                className=" text-lg flex items-center justify-start w-full"
+                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
               >
-                {isDiscussionTopicsExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
-                <span>Discussion Topics</span>
+                <div className="flex items-center">
+                  {isDiscussionTopicsExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
+                  <span>Discussion Topics</span>
+                </div>
               </button>
               {isDiscussionTopicsExpanded && ( 
-                <div className="mt-2 ml-4 text-gray-700">
+                <div className="text-gray-600 text-left w-full pl-8">
                   {renderDiscussionTopics(session.attributes.DiscussionTopics)}
                 </div>
               )}
@@ -240,16 +244,18 @@ export const SessionDetail = () => {
 
 
           <div>
-            <div className="mb-2">
+            <div className="mb-5">
               <button 
                 onClick={toggleActivitiesTopics}
-                className="text-lg flex items-center justify-start w-full"
+                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
               >
-                {isActivitiesExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
-                <span>Activities</span>
+                <div className="flex items-center">
+                  {isActivitiesExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
+                  <span>Activities</span>
+                </div>
               </button>
               {isActivitiesExpanded && ( 
-                <div className="mt-2 ml-4 text-gray-700">
+                <div className="text-gray-600 text-left w-full pl-8">
                   {renderActivities(session.attributes.Activities)}
                 </div>
               )}
