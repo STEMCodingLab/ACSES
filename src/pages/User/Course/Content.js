@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 export const Content = ({ sessionId }) => {
   const [contents, setContents] = useState([]);
   const [selectedContents, setSelectedContents] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -29,12 +30,29 @@ export const Content = ({ sessionId }) => {
     navigate(`/content/${contentId}`);
   };
 
+  const toggleSelectAll = () => {
+    if (selectAll) {
+      setSelectedContents([]);
+    } else {
+      setSelectedContents(contents.map(content => content.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
   const handleSelectContent = (contentId) => {
     setSelectedContents(prevSelected => {
       if (prevSelected.includes(contentId)) {
-        return prevSelected.filter(id => id !== contentId);
+        const newSelected = prevSelected.filter(id => id !== contentId);
+        if (newSelected.length === 0 || newSelected.length !== contents.length) {
+          setSelectAll(false);
+        }
+        return newSelected;
       } else {
-        return [...prevSelected, contentId];
+        const newSelected = [...prevSelected, contentId];
+        if (newSelected.length === contents.length) {
+          setSelectAll(true);
+        }
+        return newSelected;
       }
     });
   };
@@ -73,86 +91,85 @@ export const Content = ({ sessionId }) => {
 
   return (
     <div>
-      <div className="bg-[#ffffff]">
-        <div className="p-4 my-4 rounded-lg">
-          <div className="mb-2">
-            <strong className="font-normal text-lg">Resources</strong>
-            <button
-              className="inline-block bg-yellow-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
-              onClick={handleDownload}
-              disabled={selectedContents.length === 0}
-            >
-              Download Selected
-            </button>
-            <div className="grid grid-cols-2 gap-4">
-              {error && <p className="text-red-500">{error}</p>}
-              {contents.length > 0 ? (
-                contents.map(content => (
-                  <div key={content.id} className="max-w-sm rounded overflow-hidden shadow-lg my-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedContents.includes(content.id)}
-                      onChange={() => handleSelectContent(content.id)}
-                      className="m-2"
-                    />
-                    <img
-                      className="w-[500px] h-[200px] object-cover"
-                      src={`${content.attributes.Cover.data.attributes.url}`}
-                      alt={content.attributes.Title}
-                    />
-                    <div className="px-6 py-4" style={{ height: '150px', overflowY: 'auto' }}>
-                      <div className="font-bold text-xl mb-2">{content.attributes.Type} - {content.attributes.Title}</div>
-                      <p className="text-gray-700 text-base">
-                        {content.attributes.Description}
-                      </p>
-                    </div>
-                    <div className="px-6 pt-4 pb-2">
-                      {content.attributes.Type === 'Video' && (
-                        <button
-                          className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
-                          onClick={() => handleContentClick(content.id)}
-                          style={{ width: '120px' }}
-                        >
-                          <i className="far fa-eye"></i> Watch
-                        </button>
-                      )}
-                      {content.attributes.Type === 'PDF' && (
-                        <button
-                          className="inline-block bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
-                          onClick={() => handleContentClick(content.id)}
-                          style={{ width: '120px' }}
-                        >
-                          <i className="fas fa-book"></i> Read
-                        </button>
-                      )}
-                      {content.attributes.Type === 'PowerPoint' && (
-                        <button
-                          className="inline-block bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
-                          onClick={() => handleContentClick(content.id)}
-                          style={{ width: '120px' }}
-                        >
-                          <i className="fas fa-download"></i> Download
-                        </button>
-                      )}
-                      {content.attributes.Type === 'Word' && (
-                        <button
-                          className="inline-block bg-purple-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
-                          onClick={() => handleContentClick(content.id)}
-                          style={{ width: '120px' }}
-                        >
-                          <i className="fas fa-file-word"></i> Open
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                !error && <p>No resources available.</p>
+    <div className="mb-2" style={{ paddingLeft: '1.5rem' }}>
+      <button
+        className="inline-block bg-yellow-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+        onClick={handleDownload}
+        disabled={selectedContents.length === 0}
+      >
+        Download Selected
+      </button>
+    </div>
+
+    <div className="bg-[#ffffff] overflow-hidden sm:rounded-lg">
+      <ul className="divide-y divide-gray-200">
+        <li className="px-6 py-4">
+          <div className="flex justify-between">
+            <div className="w-1/3 text-sm font-medium text-gray-500 text-left">
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={toggleSelectAll}
+                className="mr-2"
+              />
+              Title
+            </div>
+            <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Description</div>
+            <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Operation</div>
+          </div>
+        </li>
+        {contents.map(content => (
+          <li key={content.id} className="flex justify-between items-center px-6 py-4 mb-2 transition duration-300 ease-in-out hover:shadow-lg hover:border-transparent border-b border-gray-200">
+            <div className="w-1/3 text-sm font-medium text-blue-500">
+              <input
+                type="checkbox"
+                checked={selectedContents.includes(content.id)}
+                onChange={() => handleSelectContent(content.id)}
+                className="mr-2"
+              />
+              {content.attributes.Title}
+            </div>
+            <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">{content.attributes.Description}</div>
+            <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">
+              {content.attributes.Type === 'Video' && (
+                <button
+                  className="bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                  onClick={() => handleContentClick(content.id)}
+                >
+                  Watch
+                </button>
+              )}
+              {content.attributes.Type === 'PDF' && (
+                <button
+                  className="bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                  onClick={() => handleContentClick(content.id)}
+                >
+                  Read
+                </button>
+              )}
+              {content.attributes.Type === 'PowerPoint' && (
+                <button
+                  className="bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                  onClick={() => handleContentClick(content.id)}
+                >
+                  Download
+                </button>
+              )}
+              {content.attributes.Type === 'Word' && (
+                <button
+                  className="bg-purple-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                  onClick={() => handleContentClick(content.id)}
+                >
+                  Open
+                </button>
               )}
             </div>
-          </div>
-        </div>
-      </div>
+          </li>
+        ))}
+      </ul>
     </div>
+  </div>
+
+
   );
 };

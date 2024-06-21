@@ -12,6 +12,7 @@ export const SessionDetail = () => {
   const [isActivitiesExpanded, setIsActivitiesExpanded] = useState(true);
   const [isObjecitveExpanded, setIsObjectiveExpanded] = useState(true);
   const [isAlignmentExpanded, setIsAlignmentExpanded] = useState(true);
+  const [isResourcesExpanded, setIsResourcesExpanded] = useState(true);
   const location = useLocation();
   const { programId, programTitle, sessionTitle } = location.state;
 
@@ -170,6 +171,10 @@ export const SessionDetail = () => {
   const toggleAlignment = () => {
     setIsAlignmentExpanded(!isAlignmentExpanded); // switch status
   };
+
+  const toggleResources = () => {
+    setIsResourcesExpanded(!isResourcesExpanded);
+  };
   
 
   if (!session) {
@@ -262,9 +267,28 @@ export const SessionDetail = () => {
             </div>
           </div>
 
+          <div>
+            <div className="mb-5">
+              <button 
+                onClick={toggleResources}
+                className="w-full flex items-center justify-start text-xl text-gray-600 mb-4"
+              >
+                <div className="flex items-center">
+                  {isResourcesExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
+                  <span>Resources</span>
+                </div>
+              </button>
+              {isResourcesExpanded && ( 
+                <div>
+                  <Content sessionId={sessionId} />
+                </div>
+              )}
+            </div>
+          </div>
 
 
-          <Content sessionId={sessionId} />
+
+          {/* <Content sessionId={sessionId} /> */}
 
         </div>
       </div>
