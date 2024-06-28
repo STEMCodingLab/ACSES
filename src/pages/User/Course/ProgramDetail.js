@@ -234,7 +234,7 @@ const fetchCommentData= ()=>{
               >
                 <div className="flex items-center">
                   {isOverviewExpanded ? <GoChevronDown className="mr-2" /> : <GoChevronRight className="mr-2" />}
-                  <span>Overview</span>
+                  <span>Program Overview</span>
                 </div>
               </button>
             </div>

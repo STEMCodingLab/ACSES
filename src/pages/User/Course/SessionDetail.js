@@ -215,7 +215,7 @@ export const SessionDetail = () => {
               >
                 <div className="flex items-center">
                   {isOverviewExpanded ? <GoChevronDown className="mr-2" />  : <GoChevronRight className="mr-2" />} {/* Add an expand/collapse indicator */}
-                  <span>Overview</span>
+                  <span>Session Overview</span>
                 </div>
               </button>
               {isOverviewExpanded && ( // Renders content based on the isOverviewExpanded status condition.
