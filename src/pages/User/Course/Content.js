@@ -8,11 +8,13 @@ export const Content = ({ sessionId }) => {
   const [selectedContents, setSelectedContents] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [error, setError] = useState(null);
+  const [programTitle, setProgramTitle] = useState('');
+  const [sessionTitle, setSessionTitle] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
-    fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/contents?populate=Material,Cover&filters[session][id][$eq]=${sessionId}`, {
+    fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/contents?populate=session.program,Material,Cover&filters[session][id][$eq]=${sessionId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -20,6 +22,10 @@ export const Content = ({ sessionId }) => {
       .then(response => response.json())
       .then(data => {
         setContents(data.data);
+        if (data.data.length > 0) {
+          setProgramTitle(data.data[0].attributes.session.data.attributes.program.data.attributes.Title);
+          setSessionTitle(data.data[0].attributes.session.data.attributes.Title);
+        }
       })
       .catch(error => {
         console.error('Error fetching content:', error);
@@ -96,7 +102,8 @@ export const Content = ({ sessionId }) => {
 
     zip.generateAsync({ type: 'blob' })
       .then((blob) => {
-        saveAs(blob, 'selected_contents.zip');
+        const zipFileName = `${programTitle}_${sessionTitle}.zip`;
+        saveAs(blob, zipFileName);
       })
       .catch(error => {
         console.error('Error generating Zip file:', error);
