@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { FaRegFilePdf } from "react-icons/fa";
+import { RiFilePpt2Line } from "react-icons/ri";
+import { BsFiletypeDoc } from "react-icons/bs";
+
 
 export const Content = ({ sessionId }) => {
   const [contents, setContents] = useState([]);
@@ -130,7 +135,7 @@ export const Content = ({ sessionId }) => {
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <div className="mb-2" style={{ paddingLeft: '1.5rem' }}>
         <button
-          className="inline-block bg-yellow-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+          className="inline-block bg-[#83c26a] rounded-full px-3 py-1 text-sm font-semibold text-white"
           onClick={handleDownload}
           disabled={selectedContents.length === 0}
         >
@@ -169,33 +174,41 @@ export const Content = ({ sessionId }) => {
               <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">
                 {content.attributes.Type === 'Video' && (
                   <button
-                    className="bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
-                    onClick={() => handleContentClick(content.id)}
-                  >
-                    Watch
-                  </button>
+                  className="flex items-center p-0 text-sm font-semibold"
+                  onClick={() => handleContentClick(content.id)}
+                  style={{ color: '#1da0db' }}
+                >
+                  <MdOutlineSlowMotionVideo className="text-lg ml-0 mr-2" />
+                  Watch
+                </button>
                 )}
                 {content.attributes.Type === 'PDF' && (
                   <button
-                    className="bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                    className="flex items-center p-0 text-sm font-semibold"
                     onClick={() => handleContentClick(content.id)}
+                    style={{ color: '#1da0db' }}
                   >
+                    <FaRegFilePdf className="text-lg ml-0 mr-2" />
                     Read
                   </button>
                 )}
                 {content.attributes.Type === 'PowerPoint' && (
                   <button
-                    className="bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                    className="flex items-center p-0 text-sm font-semibold"
                     onClick={() => handleContentClick(content.id)}
+                    style={{ color: '#1da0db' }}
                   >
+                    <RiFilePpt2Line className="text-lg ml-0 mr-2"/>
                     Download
                   </button>
                 )}
                 {content.attributes.Type === 'Word' && (
                   <button
-                    className="bg-purple-500 rounded-full px-3 py-1 text-sm font-semibold text-white"
+                    className="flex items-center p-0 text-sm font-semibold"
                     onClick={() => handleContentClick(content.id)}
+                    style={{ color: '#1da0db' }}
                   >
+                    <BsFiletypeDoc className="text-lg ml-0 mr-2"/>
                     Open
                   </button>
                 )}

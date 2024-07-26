@@ -191,7 +191,7 @@ export const Profile = () => {
           )}
           
         </div>
-        {/* 可以添加更多的个人信息展示 */}
+        {/* can add more to show */}
           
       </div>
 
