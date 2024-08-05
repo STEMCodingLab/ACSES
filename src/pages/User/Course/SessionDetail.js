@@ -192,7 +192,7 @@ export const SessionDetail = () => {
                 {index === breadcrumbs.length - 1 ? (
                   <span className="text-gray-500">{crumb.name}</span>
                 ) : (
-                  <Link to={crumb.link}>{crumb.name}</Link>
+                  <Link to={crumb.link} className="text-[#1da0db] hover:text-[#1da0db] hover:underline">{crumb.name}</Link>
                 )}
               </li>
             </React.Fragment>

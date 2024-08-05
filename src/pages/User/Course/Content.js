@@ -146,7 +146,7 @@ export const Content = ({ sessionId }) => {
         <ul className="divide-y divide-gray-200">
           <li className="px-6 py-4">
             <div className="flex justify-between">
-              <div className="w-1/3 text-sm font-medium text-gray-500 text-left">
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">
                 <input
                   type="checkbox"
                   checked={selectAll}
@@ -155,13 +155,13 @@ export const Content = ({ sessionId }) => {
                 />
                 Title
               </div>
-              <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Description</div>
-              <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">Operation</div>
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">Description</div>
+              <div className="w-1/5 text-sm font-medium text-gray-500 text-right">Operation</div>
             </div>
           </li>
           {contents.map(content => (
             <li key={content.id} className="flex justify-between items-center px-6 py-4 mb-2 transition duration-300 ease-in-out hover:shadow-lg hover:border-transparent border-b border-gray-200">
-              <div className="w-1/3 text-sm font-medium text-blue-500">
+              <div className="w-2/5 text-sm font-medium text-[#1da0db]">
                 <input
                   type="checkbox"
                   checked={selectedContents.includes(content.id)}
@@ -170,48 +170,50 @@ export const Content = ({ sessionId }) => {
                 />
                 {content.attributes.Title}
               </div>
-              <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">{content.attributes.Description}</div>
-              <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">
-                {content.attributes.Type === 'Video' && (
-                  <button
-                  className="flex items-center p-0 text-sm font-semibold"
-                  onClick={() => handleContentClick(content.id)}
-                  style={{ color: '#1da0db' }}
-                >
-                  <MdOutlineSlowMotionVideo className="text-lg ml-0 mr-2" />
-                  Watch
-                </button>
-                )}
-                {content.attributes.Type === 'PDF' && (
-                  <button
-                    className="flex items-center p-0 text-sm font-semibold"
-                    onClick={() => handleContentClick(content.id)}
-                    style={{ color: '#1da0db' }}
-                  >
-                    <FaRegFilePdf className="text-lg ml-0 mr-2" />
-                    Read
-                  </button>
-                )}
-                {content.attributes.Type === 'PowerPoint' && (
-                  <button
-                    className="flex items-center p-0 text-sm font-semibold"
-                    onClick={() => handleContentClick(content.id)}
-                    style={{ color: '#1da0db' }}
-                  >
-                    <RiFilePpt2Line className="text-lg ml-0 mr-2"/>
-                    Download
-                  </button>
-                )}
-                {content.attributes.Type === 'Word' && (
-                  <button
-                    className="flex items-center p-0 text-sm font-semibold"
-                    onClick={() => handleContentClick(content.id)}
-                    style={{ color: '#1da0db' }}
-                  >
-                    <BsFiletypeDoc className="text-lg ml-0 mr-2"/>
-                    Open
-                  </button>
-                )}
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">{content.attributes.Description}</div>
+              <div className="w-1/5 text-sm font-medium text-gray-500 text-right">
+                <div className="flex justify-end">
+                  {content.attributes.Type === 'Video' && (
+                    <button
+                      className="flex items-center p-0 text-sm font-semibold"
+                      onClick={() => handleContentClick(content.id)}
+                      style={{ color: '#1da0db' }}
+                    >
+                      <MdOutlineSlowMotionVideo className="text-lg ml-0 mr-2" />
+                      Watch
+                    </button>
+                  )}
+                  {content.attributes.Type === 'PDF' && (
+                    <button
+                      className="flex items-center p-0 text-sm font-semibold"
+                      onClick={() => handleContentClick(content.id)}
+                      style={{ color: '#1da0db' }}
+                    >
+                      <FaRegFilePdf className="text-lg ml-0 mr-2" />
+                      Read
+                    </button>
+                  )}
+                  {content.attributes.Type === 'PowerPoint' && (
+                    <button
+                      className="flex items-center p-0 text-sm font-semibold"
+                      onClick={() => handleContentClick(content.id)}
+                      style={{ color: '#1da0db' }}
+                    >
+                      <RiFilePpt2Line className="text-lg ml-0 mr-2"/>
+                      Download
+                    </button>
+                  )}
+                  {content.attributes.Type === 'Word' && (
+                    <button
+                      className="flex items-center p-0 text-sm font-semibold"
+                      onClick={() => handleContentClick(content.id)}
+                      style={{ color: '#1da0db' }}
+                    >
+                      <BsFiletypeDoc className="text-lg ml-0 mr-2"/>
+                      Open
+                    </button>
+                  )}
+                </div>
               </div>
             </li>
           ))}
@@ -219,4 +221,5 @@ export const Content = ({ sessionId }) => {
       </div>
     </div>
   );
+  
 };

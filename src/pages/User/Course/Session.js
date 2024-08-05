@@ -28,7 +28,7 @@ export const Session = ({ programId }) => {
               className="px-6 py-4 mb-2 transition duration-300 ease-in-out hover:shadow-lg hover:border-transparent border-b border-gray-200"
             >
               <li className="flex justify-between items-center">
-              <div className="w-1/3 text-sm font-medium text-blue-500">
+              <div className="w-1/2 text-sm font-medium">
                 <Link 
                   to={`/programs/${programId}/sessions/${session.id}`}
                   state={{
@@ -36,12 +36,13 @@ export const Session = ({ programId }) => {
                     programTitle: session.attributes.program.data.attributes.Title,
                     sessionTitle: session.attributes.Title
                   }}
+                  className="text-[#1da0db]"
                 >
                   {session.attributes.Title}
                 </Link>
               </div>
-                <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">{session.attributes.Duration}</div>
-                <div className="w-1/3 text-sm font-medium text-gray-500 ml-16">
+                <div className="w-1/4 text-sm font-medium text-gray-500 text-center">{session.attributes.Duration}</div>
+                <div className="w-1/4 text-sm font-medium text-gray-500 text-right">
                   {session.attributes.Tags ? (
                     session.attributes.Tags.split(',').map((tag, index) => (
                       <span key={index} >
@@ -61,3 +62,4 @@ export const Session = ({ programId }) => {
       </div>
     );    
 };
+
