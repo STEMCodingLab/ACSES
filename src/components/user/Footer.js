@@ -18,7 +18,7 @@ export const Footer = () => {
               <p className="font-medium text-base mb-4" style={{ color: '#1F1F1F' }}>Contact Us</p> {/* Added mb-4 for 16px margin below title */}
               <div className="flex space-x-2">
                 <p className="text-2xl text-green-900">
-                  <AiOutlineWhatsApp />
+                  <AiOutlineWhatsApp className="text-[#1da0db]" />
                 </p>
                 <div className="text-sm">
                   <p style={{ color: '#1F1F1F' }}>Call Us</p>
@@ -27,7 +27,7 @@ export const Footer = () => {
               </div>
               <div className="flex space-x-2">
                 <p className="text-2xl text-green-900">
-                  <AiOutlinePhone />
+                  <AiOutlinePhone className="text-[#1da0db]" />
                 </p>
                 <div className="text-sm">
                   <p style={{ color: '#1F1F1F' }}>Fax</p>
@@ -36,7 +36,7 @@ export const Footer = () => {
               </div>
               <div className="flex space-x-2">
                 <p className="text-2xl text-green-900">
-                  <AiOutlineMail />
+                  <AiOutlineMail className="text-[#1da0db]" />
                 </p>
                 <div className="text-sm">
                   <p style={{ color: '#1F1F1F' }}>Email Us</p>

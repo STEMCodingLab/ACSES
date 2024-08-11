@@ -211,7 +211,7 @@ export const ProgramDetail = () => {
         <ol className="flex items-center space-x-2">
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={index}>
-              {index !== 0 && <GoChevronRight />}
+              {index !== 0 && <GoChevronRight className="mx-2 text-gray-500"/>}
               <li className={`flex items-center ${index === 0 ? 'text-indigo-600 hover:text-indigo-700 hover:underline' : 'font-medium'}`}>
                 {index === breadcrumbs.length - 1 ? (
                   <span className="text-gray-500">{crumb.name}</span>
@@ -280,12 +280,14 @@ export const ProgramDetail = () => {
               </div>
               {isExpanded && (
                 <div className="mb-4">
-                  <div className="border border-gray-300 rounded w-1/6 flex flex-center ml-7">
-                    <select value={selectedTag} onChange={handleTagChange} className="p-2">
-                      {tags.map(tag => (
-                        <option key={tag} value={tag}>{tag}</option>
-                      ))}
-                    </select>
+                  <div className='flex'>
+                    <div className="border border-gray-300 rounded mr-4 pr-2 ml-6">
+                      <select value={selectedTag} onChange={handleTagChange} className="p-2">
+                        {tags.map(tag => (
+                          <option key={tag} value={tag} className='text-gray-500'>{tag}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div className="bg-[#ffffff] overflow-hidden sm:rounded-lg">
                     <ul className="divide-y divide-gray-200">

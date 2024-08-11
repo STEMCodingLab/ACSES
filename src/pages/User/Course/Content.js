@@ -156,7 +156,7 @@ export const Content = ({ sessionId }) => {
                 Title
               </div>
               <div className="w-2/5 text-sm font-medium text-gray-500 text-left">Description</div>
-              <div className="w-1/5 text-sm font-medium text-gray-500 text-right">Operation</div>
+              <div className="w-1/5 text-sm font-medium text-gray-500 text-left">Operation</div>
             </div>
           </li>
           {contents.map(content => (
@@ -170,9 +170,9 @@ export const Content = ({ sessionId }) => {
                 />
                 {content.attributes.Title}
               </div>
-              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">{content.attributes.Description}</div>
-              <div className="w-1/5 text-sm font-medium text-gray-500 text-right">
-                <div className="flex justify-end">
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left pr-6">{content.attributes.Description}</div>
+              <div className="w-1/5 text-sm font-medium text-gray-500 text-left">
+                <div className="flex justify-start">
                   {content.attributes.Type === 'Video' && (
                     <button
                       className="flex items-center p-0 text-sm font-semibold"

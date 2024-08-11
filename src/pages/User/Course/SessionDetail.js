@@ -31,7 +31,7 @@ export const SessionDetail = () => {
   }, [sessionId]);
 
   const breadcrumbs = [
-    { name: 'All Programs', link: '/' },
+    { name: 'Programs', link: '/' },
     { name: programTitle, link: `/programs/${programId}` }, // Program Title 
     { name: sessionTitle, link: `/programs/${programId}/sessions/${sessionId}` }, // Session Title 
   ];
@@ -184,21 +184,21 @@ export const SessionDetail = () => {
   return (
   <div className="container mx-auto">
     <nav aria-label="breadcrumb" className="pt-4">
-        <ol className="flex leading-none text-indigo-600">
-          {breadcrumbs.map((crumb, index) => (
-            <React.Fragment key={index}>
-              <li className={`${index === breadcrumbs.length - 1 ? 'font-medium' :'text-indigo-600 hover:text-indigo-700 hover:underline'} flex items-center`}>
-                {index !== 0 && <GoChevronRight className="mx-2" />}
-                {index === breadcrumbs.length - 1 ? (
-                  <span className="text-gray-500">{crumb.name}</span>
-                ) : (
-                  <Link to={crumb.link} className="text-[#1da0db] hover:text-[#1da0db] hover:underline">{crumb.name}</Link>
-                )}
-              </li>
-            </React.Fragment>
-          ))}
-        </ol>
-      </nav>
+      <ol className="flex items-center space-x-2">
+        {breadcrumbs.map((crumb, index) => (
+          <React.Fragment key={index}>
+            <li className={`flex items-center ${index === breadcrumbs.length - 1 ? 'font-medium' :'text-indigo-600 hover:text-indigo-700 hover:underline'}`}>
+              {index !== 0 && <GoChevronRight className="mx-2 text-gray-500" />}
+              {index === breadcrumbs.length - 1 ? (
+                <span className="text-gray-500">{crumb.name}</span>
+              ) : (
+                <Link to={crumb.link} className="text-[#1da0db] hover:text-[#1da0db] hover:underline">{crumb.name}</Link>
+              )}
+            </li>
+          </React.Fragment>
+        ))}
+      </ol>
+    </nav>
 
  
     <div className="w-full bg-[#ffffff] flex container" style={{margin:"auto",borderRadius:20,overflow:"hidden",marginTop:20,marginBottom:20}}>
