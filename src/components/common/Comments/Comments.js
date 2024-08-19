@@ -140,8 +140,10 @@ const Comments = ({ commentData, fetchCommentData }) => {
           placeholder="Write your comment here..."
           required
         ></textarea>
-        <button type="submit" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-          Submit
+        <button type="submit" 
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          style={{ backgroundColor: '#1da0db' }}>
+            Submit
         </button>
       </form>
     </div>

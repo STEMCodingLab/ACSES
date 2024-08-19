@@ -6,6 +6,8 @@ import { MdOutlineSlowMotionVideo } from "react-icons/md";
 import { FaRegFilePdf } from "react-icons/fa";
 import { RiFilePpt2Line } from "react-icons/ri";
 import { BsFiletypeDoc } from "react-icons/bs";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Content = ({ sessionId }) => {
@@ -87,12 +89,12 @@ export const Content = ({ sessionId }) => {
 
   const handleDownload = async () => {
     if (selectedContents.length === 0) {
-      console.log('No content selected for download');
+      toast.error('Please select the resource to be downloaded.');
       return;
     }
-
+  
     const zip = new JSZip();
-
+  
     await Promise.all(selectedContents.map(async (contentId) => {
       const content = contents.find(c => c.id === contentId);
       if (content && content.attributes.Material.data.length > 0) {
@@ -104,7 +106,7 @@ export const Content = ({ sessionId }) => {
         console.log(`No material found for content ID: ${contentId}`);
       }
     }));
-
+  
     zip.generateAsync({ type: 'blob' })
       .then((blob) => {
         const zipFileName = `${programTitle}_${sessionTitle}.zip`;
@@ -114,6 +116,7 @@ export const Content = ({ sessionId }) => {
         console.error('Error generating Zip file:', error);
       });
   };
+  
 
   const getFileExtension = (type) => {
     switch(type) {
@@ -133,20 +136,20 @@ export const Content = ({ sessionId }) => {
   return (
     <div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
+      <ToastContainer />
       <div className="mb-2" style={{ paddingLeft: '1.5rem' }}>
         <button
           className="inline-block bg-[#83c26a] rounded-full px-3 py-1 text-sm font-semibold text-white"
           onClick={handleDownload}
-          disabled={selectedContents.length === 0}
         >
-          Download Selected
+          Download
         </button>
       </div>
       <div className="bg-[#ffffff] overflow-hidden sm:rounded-lg">
         <ul className="divide-y divide-gray-200">
           <li className="px-6 py-4">
             <div className="flex justify-between">
-              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left" style={{ color: '#130e25' }}>
                 <input
                   type="checkbox"
                   checked={selectAll}
@@ -155,18 +158,18 @@ export const Content = ({ sessionId }) => {
                 />
                 Title
               </div>
-              <div className="w-2/5 text-sm font-medium text-gray-500 text-left">Description</div>
-              <div className="w-1/5 text-sm font-medium text-gray-500 text-left">Operation</div>
+              <div className="w-2/5 text-sm font-medium text-gray-500 text-left" style={{ color: '#130e25' }}>Description</div>
+              <div className="w-1/5 text-sm font-medium text-gray-500 text-left" style={{ color: '#130e25' }}>Operation</div>
             </div>
           </li>
           {contents.map(content => (
             <li key={content.id} className="flex justify-between items-center px-6 py-4 mb-2 transition duration-300 ease-in-out hover:shadow-lg hover:border-transparent border-b border-gray-200">
-              <div className="w-2/5 text-sm font-medium text-[#1da0db]">
+              <div className="w-2/5 text-sm font-medium text-gray-500">
                 <input
                   type="checkbox"
                   checked={selectedContents.includes(content.id)}
                   onChange={() => handleSelectContent(content.id)}
-                  className="mr-2"
+                  className="mr-2 text-gray-500"
                 />
                 {content.attributes.Title}
               </div>
