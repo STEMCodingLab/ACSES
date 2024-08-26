@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { GoChevronRight, GoChevronDown } from "react-icons/go";
 import Comments from '../../../components/common/Comments/Comments';
@@ -52,7 +52,7 @@ export const ProgramDetail = () => {
     return Object.values(transformedData);
   };
 
-  const fetchCommentData = () => {
+  const fetchCommentData = useCallback(() => {
     const token = localStorage.getItem('jwt');
     fetch(`https://vivid-bloom-0edc0dd8df.strapiapp.com/api/comments?populate=*&filters[pid][$eq]=${programId}`, {
       headers: {
@@ -63,7 +63,7 @@ export const ProgramDetail = () => {
       .then((data) => {
         setCommentsData(transformData(data.data));
       });
-  };
+  }, [programId]); // Include programId since fetchCommentData depends on it
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -86,7 +86,7 @@ export const ProgramDetail = () => {
       .catch((error) => console.error('Error fetching program details:', error));
 
     fetchCommentData();
-  }, [programId, navigate]);
+  }, [programId, navigate, fetchCommentData]); // Added fetchCommentData here
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -351,7 +351,7 @@ export const ProgramDetail = () => {
           </div>
         </div>
         <div className="bg-[#ffffff] w-1/3 mr-20 ml-30">
-          <div className="p-4 my-4 rounded-lg shadow bg-[#ffffff] ml-30" style={{ padding: '10px', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+          <div className="p-4 my-4 rounded-lg shadow bg-[#def1fa] ml-30" style={{ padding: '10px', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
             <div className="mb-2">
               <button
                 onClick={toggleSkills}

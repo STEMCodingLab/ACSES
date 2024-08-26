@@ -89,7 +89,7 @@ export const Content = ({ sessionId }) => {
 
   const handleDownload = async () => {
     if (selectedContents.length === 0) {
-      toast.error('Please select the resource to be downloaded.');
+      toast.error('Please select the resources to be downloaded.');
       return;
     }
   
